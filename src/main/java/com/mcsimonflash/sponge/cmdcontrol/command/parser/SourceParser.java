@@ -2,7 +2,7 @@ package com.mcsimonflash.sponge.cmdcontrol.command.parser;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-import com.mcsimonflash.sponge.teslalibs.command.arguments.parser.StandardParser;
+import com.mcsimonflash.sponge.teslalibs.argument.parser.StandardParser;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.command.CommandSource;
 import org.spongepowered.api.command.args.ArgumentParseException;
