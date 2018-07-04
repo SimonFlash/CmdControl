@@ -22,11 +22,11 @@ import java.util.stream.Stream;
 @Children({Execute.class, Message.class, Random.class})
 public class Base extends Command {
 
-    public static final Text LINKS = Text.of("                      ", CmdUtils.link("Ore Project", CmdControl.get().getContainer().getUrl().flatMap(CmdUtils::parseURL)), TextColors.GRAY, " | ", CmdUtils.link("Support Discord", CmdPlugin.DISCORD));
+    private static final Text LINKS = Text.of("                      ", CmdUtils.link("Ore Project", CmdControl.get().getContainer().getUrl().flatMap(CmdUtils::parseURL)), TextColors.GRAY, " | ", CmdUtils.link("Support Discord", CmdPlugin.DISCORD));
 
     @Inject
-    private Base(CommandService service) {
-        super(service, settings().usage(CmdUtils.usage("/cmdcontrol ", CmdUtils.info("CmdControl", "Opens the command reference menu.\n", "", "cmdcontrol, cc\n", "cmdcontrol.command.base"),
+    private Base(Command.Settings settings) {
+        super(settings.usage(CmdUtils.usage("/cmdcontrol ", CmdUtils.info("CmdControl", "Opens the command reference menu.\n", "", "cmdcontrol, cc\n", "cmdcontrol.command.base"),
                 CmdUtils.arg(true, "...", CmdUtils.info("Subcommand", "One of CmdControl's subcommands.\n", "execute, random, sendmessage\n", "", "")))));
     }
 

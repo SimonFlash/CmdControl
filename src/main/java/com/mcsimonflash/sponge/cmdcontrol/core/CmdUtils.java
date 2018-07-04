@@ -1,9 +1,7 @@
 package com.mcsimonflash.sponge.cmdcontrol.core;
 
 import com.mcsimonflash.sponge.cmdcontrol.CmdControl;
-import com.mcsimonflash.sponge.teslalibs.message.MessageService;
 import org.spongepowered.api.Sponge;
-import org.spongepowered.api.asset.Asset;
 import org.spongepowered.api.command.CommandResult;
 import org.spongepowered.api.command.CommandSource;
 import org.spongepowered.api.scheduler.Task;
@@ -12,10 +10,8 @@ import org.spongepowered.api.text.action.TextActions;
 import org.spongepowered.api.text.format.TextColors;
 import org.spongepowered.api.text.serializer.TextSerializers;
 
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.nio.file.Path;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
@@ -42,20 +38,6 @@ public class CmdUtils {
         } catch (MalformedURLException ignored) {
             return Optional.empty();
         }
-    }
-
-    public static MessageService getMessageService(CmdPlugin plugin) {
-        Asset messages = plugin.getContainer().getAsset("messages.properties").orElse(null);
-        if (messages != null) {
-            Path translations = plugin.getDirectory().resolve("translations");
-            try {
-                messages.copyToDirectory(translations);
-                return MessageService.of(translations, "messages");
-            } catch (IOException e) {
-                plugin.getLogger().error("An error occurred initializing message translations. Using internal copies.");
-            }
-        }
-        return MessageService.of(plugin.getContainer(), "messages");
     }
 
     public static Text usage(String cmd, Text info, Text... args) {

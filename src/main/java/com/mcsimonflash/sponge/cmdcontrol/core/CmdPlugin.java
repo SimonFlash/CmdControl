@@ -6,9 +6,11 @@ import com.mcsimonflash.sponge.teslalibs.command.CommandService;
 import com.mcsimonflash.sponge.teslalibs.message.MessageService;
 import org.slf4j.Logger;
 import org.spongepowered.api.Sponge;
+import org.spongepowered.api.asset.Asset;
 import org.spongepowered.api.plugin.PluginContainer;
 import org.spongepowered.api.text.Text;
 
+import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Path;
 import java.util.Map;
@@ -32,9 +34,19 @@ public abstract class CmdPlugin {
         directory = Sponge.getConfigManager().getPluginConfig(container).getDirectory();
         logger = container.getLogger();
         commands = CommandService.of(container);
-        messages = CmdUtils.getMessageService(this);
+        messages = getMessageService();
         REGISTRY.put(container.getId(), this);
-        System.out.println("URL: " + container.getUrl().orElse("undefined"));
+    }
+
+    private MessageService getMessageService() {
+        Path translations = directory.resolve("translations");
+        try {
+            container.getAsset("messages.properties").get().copyToDirectory(translations);
+            return MessageService.of(translations, "messages");
+        } catch (IOException e) {
+            logger.error("An error occurred initializing message translations. Using internal copies.");
+            return MessageService.of(container, "messages");
+        }
     }
 
     public PluginContainer getContainer() {

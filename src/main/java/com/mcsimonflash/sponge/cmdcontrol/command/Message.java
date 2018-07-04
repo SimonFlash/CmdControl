@@ -28,9 +28,9 @@ public class Message extends Command {
     private static final Pattern MODIFIERS = Pattern.compile("\\[(.+?)]\\((.+?)\\)");
 
     @Inject
-    private Message(CommandService service) {
-        super(service, settings()
-                .arguments(
+    private Message(Command.Settings settings) {
+        super(settings
+                .elements(
                         SourceParser.PARSER.toElement("source"),
                         Arguments.remainingStrings().toElement("message"))
                 .usage(CmdUtils.usage("/cmdcontrol message ", CmdUtils.info("Message", "Sends an un-prefixed message to a source.\n", "", "message, msg\n", "cmdcontrol.command.message.base"),

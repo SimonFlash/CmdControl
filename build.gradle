@@ -1,16 +1,22 @@
 plugins {
     id 'java'
     id 'org.spongepowered.plugin' version '0.8.1'
-    id 'com.github.johnrengelman.shadow' version '1.2.3'
+    id 'com.github.johnrengelman.shadow' version '2.0.4'
+}
+
+repositories {
+    maven {
+        url 'https://jitpack.io'
+    }
 }
 
 group 'com.mcsimonflash.sponge.cmdcontrol'
-version '1.1.0'
+version '1.2.0'
+ext.teslaversion = '1.1.4'
 ext.spongeversion = '7.1.0-SNAPSHOT'
-ext.teslaversion = '1.1.0'
 
 dependencies {
-    compile files("libs/TeslaLibs-s${spongeversion.substring(0, 3)}-v${teslaversion}.jar")
+    compile "com.github.SimonFlash.TeslaPowered:TeslaLibs:v${teslaversion}"
     compile "org.spongepowered:spongeapi:${spongeversion}"
 }
 
@@ -20,7 +26,7 @@ jar {
 
 shadowJar {
     dependencies {
-        include dependency(files('TeslaLibs*.jar'))
+        include dependency("com.github.SimonFlash.TeslaPowered:TeslaLibs:v${teslaversion}")
     }
     relocate 'com.mcsimonflash.sponge.teslalibs', 'com.mcsimonflash.sponge.cmdcontrol.teslalibs'
     archiveName = "${project.name}-s${spongeversion.substring(0, 3)}-v${version}.jar"
